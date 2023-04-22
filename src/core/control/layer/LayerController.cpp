@@ -20,6 +20,7 @@
 #include "util/i18n.h"                      // for FS, _F
 
 #include "LayerCtrlListener.h"  // for LayerCtrlListener
+#include "gui/toolbarMenubar/ToolPageLayer.h" // for ToolPageLayer
 
 LayerController::LayerController(Control* control): control(control), selectedPage(npos) {}
 
@@ -321,6 +322,7 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
 
     PageRef p = getCurrentPage();
     if (!p) {
+        ToolPageLayer::updateLayerData();
         return;
     }
 
@@ -333,6 +335,8 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
         control->getWindow()->getXournal()->layerChanged(selectedPage);
         fireLayerVisibilityChanged();
     }
+
+    ToolPageLayer::updateLayerData();
 }
 
 /**
